@@ -1,6 +1,7 @@
 'use client';
 
 import { z } from 'zod';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Form,
@@ -13,13 +14,17 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, 'Password is required'),
-});
+import { FormError } from '@/components/global/form-error';
+import { FormSuccess } from '../global/form-success';
+import { loginSchema } from '@/schemas';
+import { login } from '@/app/actions/login';
 
 const LoginForm = ({ buttonTitle }: { buttonTitle: string }) => {
+  const [isPending, startTransition] = useTransition();
+
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -29,7 +34,12 @@ const LoginForm = ({ buttonTitle }: { buttonTitle: string }) => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    startTransition(() => {
+      login(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
   };
 
   return (
@@ -45,6 +55,7 @@ const LoginForm = ({ buttonTitle }: { buttonTitle: string }) => {
                 type='email'
                 placeholder='m@example.com'
                 autoComplete='on'
+                disabled={isPending}
                 {...field}
               />
             </FormControl>
@@ -63,6 +74,7 @@ const LoginForm = ({ buttonTitle }: { buttonTitle: string }) => {
                 type='password'
                 placeholder='******'
                 autoComplete='off'
+                disabled={isPending}
                 {...field}
               />
             </FormControl>
@@ -70,7 +82,12 @@ const LoginForm = ({ buttonTitle }: { buttonTitle: string }) => {
           </FormItem>
         )}
       />
-      <Button className='w-full' onClick={form.handleSubmit(onSubmit)}>
+      <FormError message={error} />
+      <FormSuccess message={success} />
+      <Button
+        className='w-full'
+        disabled={isPending}
+        onClick={form.handleSubmit(onSubmit)}>
         {buttonTitle}
       </Button>
     </Form>

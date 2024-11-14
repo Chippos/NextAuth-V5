@@ -5,6 +5,19 @@ This project is an authentication app built using Next.js (v5) and Prisma ORM, c
 > [!Warning]
 > This project is under development. Use development build until deployment.
 
+## Key Features
+
+- **Next.js v5**: Utilizes the latest version of Next.js for server-side rendering, dynamic routing, and API routes.
+- **Prisma ORM**: Simplified database management and schema migrations using Prisma ORM.
+- **NeonDB**: Integrated with NeonDB, a scalable and reliable PostgreSQL cloud database.
+- **NextAuth.js**: Secure authentication and session management with NextAuth.js, supporting multiple providers.
+- **Tanstack Query**: Efficient server-state management and data synchronization for a smoother user experience.
+- **Typescript**: Ensures strong typing across the codebase for improved developer experience and error prevention.
+
+## Screenshots
+
+![NextAuth Login](next-auth.png)
+
 ## Getting Started
 
 Follow the instructions below to set up and run the project locally.
@@ -34,16 +47,3 @@ npm run dev
 ```
 
 This will install the required dependencies and run the development build in your local environment. You can open the app in your browser on the specified port.
-
-## Screenshots
-
-![NextAuth Login](next-auth.png)
-
-## Key Features
-
-- **Next.js v5**: Utilizes the latest version of Next.js for server-side rendering, dynamic routing, and API routes.
-- **Prisma ORM**: Simplified database management and schema migrations using Prisma ORM.
-- **NeonDB**: Integrated with NeonDB, a scalable and reliable PostgreSQL cloud database.
-- **NextAuth.js**: Secure authentication and session management with NextAuth.js, supporting multiple providers.
-- **Tanstack Query**: Efficient server-state management and data synchronization for a smoother user experience.
-- **Typescript**: Ensures strong typing across the codebase for improved developer experience and error prevention.
